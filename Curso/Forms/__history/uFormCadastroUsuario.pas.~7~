@@ -17,19 +17,18 @@ type
     fdQryCadastroLOGIN: TStringField;
     fdQryCadastroSENHA: TStringField;
     Label1: TLabel;
-    edtNome: TDBEdit;
+    DBEdit1: TDBEdit;
     Label2: TLabel;
-    edtLogin: TDBEdit;
+    DBEdit2: TDBEdit;
     Label3: TLabel;
-    edtSenha: TDBEdit;
+    DBEdit3: TDBEdit;
     fdQryCadastroDT_EXCLUIDO: TDateField;
     Label4: TLabel;
     DBEdit4: TDBEdit;
     procedure fdQryCadastroBeforePost(DataSet: TDataSet);
-    procedure btnGravarClick(Sender: TObject);
     //procedure DBEdit1Change(Sender: TObject);
   private
-    procedure ValidaCampos;
+    { Private declarations }
   public
     { Public declarations }
   end;
@@ -43,39 +42,14 @@ implementation
 
 uses uCrpt;
 
-procedure TFormCadastroUsuario.btnGravarClick(Sender: TObject);
-begin
-  ValidaCampos;
-  inherited;
-end;
-
 procedure TFormCadastroUsuario.fdQryCadastroBeforePost(DataSet: TDataSet);
 begin
   inherited;
-  if fdQryCadastro.State in [dsInsert] then
+  if VarToStrDef(fdQryCadastroSENHA.OldValue,'') <> '' then
   begin
-    fdQryCadastroSENHA.AsAnsiString := Criptografa('D',fdQryCadastroSENHA.AsAnsiString);
-  end
-  else if fdQryCadastro.State in [dsEdit] then
-  begin
-    if (fdQryCadastroSENHA.AsAnsiString <> fdQryCadastroSENHA.OldValue) then
-    begin
-      fdQryCadastroSENHA.AsAnsiString := Criptografa('C',fdQryCadastroSENHA.AsAnsiString);
+    if C then
 
-
-    end;
   end;
-end;
-procedure TFormCadastroUsuario.ValidaCampos;
-begin
-  if (Trim(edtNome.Text) = '')
-      or (Trim(edtLogin.Text) = '')
-      or (Trim(edtSenha.Text) = '') then
-      begin
-        ShowMessage('Todos campos são Obrigatórios');
-        Abort;
-      end;
-
 end;
 
 end.

@@ -37,9 +37,15 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Caption = 'ID_USUARIO'
     FocusControl = DBEdit4
   end
+  inherited pnCabecalho: TPanel
+    inherited btnGravar: TBitBtn
+      Top = 5
+      ExplicitTop = 5
+    end
+  end
   object edtNome: TDBEdit [5]
     Left = 156
-    Top = 72
+    Top = 66
     Width = 250
     Height = 21
     DataField = 'NOME'
@@ -62,7 +68,6 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Height = 21
     DataField = 'SENHA'
     DataSource = dsCadastro
-    PasswordChar = '*'
     TabOrder = 3
   end
   object DBEdit4: TDBEdit [8]

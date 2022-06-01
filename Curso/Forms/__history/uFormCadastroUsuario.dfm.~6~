@@ -11,7 +11,7 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Width = 29
     Height = 13
     Caption = 'NOME'
-    FocusControl = edtNome
+    FocusControl = DBEdit1
   end
   object Label2: TLabel [1]
     Left = 16
@@ -19,7 +19,7 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Width = 31
     Height = 13
     Caption = 'LOGIN'
-    FocusControl = edtLogin
+    FocusControl = DBEdit2
   end
   object Label3: TLabel [2]
     Left = 222
@@ -27,7 +27,7 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Width = 33
     Height = 13
     Caption = 'SENHA'
-    FocusControl = edtSenha
+    FocusControl = DBEdit3
   end
   object Label4: TLabel [3]
     Left = 16
@@ -37,37 +37,36 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Caption = 'ID_USUARIO'
     FocusControl = DBEdit4
   end
-  object edtNome: TDBEdit [5]
+  object DBEdit1: TDBEdit [5]
     Left = 156
-    Top = 72
+    Top = 69
     Width = 250
     Height = 21
     DataField = 'NOME'
     DataSource = dsCadastro
     TabOrder = 1
   end
-  object edtLogin: TDBEdit [6]
+  object DBEdit2: TDBEdit [6]
     Left = 16
-    Top = 112
+    Top = 109
     Width = 200
     Height = 21
     DataField = 'LOGIN'
     DataSource = dsCadastro
     TabOrder = 2
   end
-  object edtSenha: TDBEdit [7]
+  object DBEdit3: TDBEdit [7]
     Left = 222
-    Top = 112
+    Top = 109
     Width = 200
     Height = 21
     DataField = 'SENHA'
     DataSource = dsCadastro
-    PasswordChar = '*'
     TabOrder = 3
   end
   object DBEdit4: TDBEdit [8]
     Left = 16
-    Top = 72
+    Top = 69
     Width = 134
     Height = 21
     DataField = 'ID_USUARIO'
@@ -76,7 +75,6 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     TabOrder = 4
   end
   inherited fdQryCadastro: TFDQuery
-    BeforePost = fdQryCadastroBeforePost
     UpdateOptions.AssignedValues = [uvGeneratorName]
     UpdateOptions.GeneratorName = 'GEN_USUARIO_ID'
     UpdateOptions.AutoIncFields = 'ID_USUARIO'

@@ -2,6 +2,7 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
   Caption = 'Cadastro de Usu'#225'rios'
   ClientHeight = 176
   WindowState = wsNormal
+  ExplicitLeft = -1
   ExplicitHeight = 205
   PixelsPerInch = 96
   TextHeight = 13
@@ -37,9 +38,15 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Caption = 'ID_USUARIO'
     FocusControl = DBEdit4
   end
+  inherited pnCabecalho: TPanel
+    inherited btnGravar: TBitBtn
+      Top = 5
+      ExplicitTop = 5
+    end
+  end
   object edtNome: TDBEdit [5]
     Left = 156
-    Top = 72
+    Top = 66
     Width = 250
     Height = 21
     DataField = 'NOME'
@@ -53,6 +60,7 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Height = 21
     DataField = 'LOGIN'
     DataSource = dsCadastro
+    PasswordChar = '*'
     TabOrder = 2
   end
   object edtSenha: TDBEdit [7]
@@ -62,7 +70,6 @@ inherited FormCadastroUsuario: TFormCadastroUsuario
     Height = 21
     DataField = 'SENHA'
     DataSource = dsCadastro
-    PasswordChar = '*'
     TabOrder = 3
   end
   object DBEdit4: TDBEdit [8]

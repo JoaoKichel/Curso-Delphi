@@ -3,8 +3,6 @@ inherited FormFiltroUsuario: TFormFiltroUsuario
   FormStyle = fsMDIChild
   Position = poDesktopCenter
   Visible = True
-  WindowState = wsMaximized
-  ExplicitLeft = -29
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel1: TPanel
