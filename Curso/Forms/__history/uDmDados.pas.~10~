@@ -1,0 +1,51 @@
+unit uDmDados;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Comp.Client,
+  Vcl.Forms, Data.DB;
+
+type
+    TdmDados = class(TDataModule)
+    fdCon: TFDConnection;
+    procedure DataModuleCreate (Sender: TObject);
+
+  private
+    procedure CarregaBanco;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  dmDados: TdmDados;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses uFormConfigBanco, uBiblioteca, Data.DB;
+{$R *.dfm}
+
+{ TdmDados }
+
+procedure TdmDados.CarregaBanco;
+begin
+  try
+     fdCon.Params.Database := GetValorIni(ExtractFilePath(Application.ExeName), 'configuracao','local');
+     fdCon.Connected := True;
+  except
+      uFormConfigBanco.ShowModal;
+  end;
+end;
+
+procedure TdmDados.DataModuleCreate(Sender: TObject);
+begin
+ CarregaBanco;
+end;
+
+end.

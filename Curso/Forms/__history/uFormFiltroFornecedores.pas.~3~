@@ -1,0 +1,62 @@
+unit uFormFiltroFornecedores;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormFiltroPai, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFormFiltroFornecedores = class(TFormFiltroPai)
+    fdQryFiltroID_FORNECEDOR: TIntegerField;
+    fdQryFiltroRAZAO_SOCIAL: TStringField;
+    fdQryFiltroFANTASIA: TStringField;
+    fdQryFiltroCNPJ: TStringField;
+    fdQryFiltroENDERECO: TStringField;
+    fdQryFiltroBAIRRO: TStringField;
+    fdQryFiltroID_CIDADE: TIntegerField;
+    fdQryFiltroID_ESTADO: TIntegerField;
+    fdQryFiltroEMAIL: TStringField;
+    DBGrid1: TDBGrid;
+    edtCnpj: TEdit;
+    Label2: TLabel;
+  private
+    procedure Filtrar;
+  public
+    { Public declarations }
+  end;
+
+var
+  FormFiltroFornecedores: TFormFiltroFornecedores;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormFiltroFornecedores }
+
+procedure TFormFiltroFornecedores.Filtrar;
+begin
+  fdQryFiltro.Close;
+  fdQryFiltro.SQL.Clear;
+  fdQryFiltro.SQL.Add('SELECT * FROM FORNECEDOR');
+  fdQryFiltro.SQL.Add('WHERE 1=1');
+
+  if Trim(edtFiltro.Text) <> '' then //Razão Social
+  begin
+    fdQryFiltro.SQL.Add('AND UPPER(TRIM(RAZAO_SOCIAL)) LIKE ' + QuotedStr('%' + UpperCase(Trim(edtFiltro.Text)) + '%'));
+  end;
+
+  if Trim(edtCnpj.Text) <> '' then //CNPJ
+  begin
+  fdQryFiltro.SQL.Add('AND UPPER(TRIM(REPLACE(REPLACE(REPLACE(CPF_CNPJ, ''.'',''''),''-'',''''),''/'',''''))) LIKE ' + QuotedStr('%' + UpperCase(Trim(edtCnpj.Text)) + '%'));
+  end;
+
+  fdQryFiltro.Open();
+  fdQryFiltro.FetchAll;
+end;
+end.

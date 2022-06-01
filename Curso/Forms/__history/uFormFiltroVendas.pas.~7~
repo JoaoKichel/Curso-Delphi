@@ -1,0 +1,81 @@
+unit uFormFiltroVendas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uFormFiltroPai, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFormFiltroVendas = class(TFormFiltroPai)
+    edtData1: TDateTimePicker;
+    edtData2: TDateTimePicker;
+    Label2: TLabel;
+    edtCodVenda: TEdit;
+    Label3: TLabel;
+    cbFaturado: TCheckBox;
+    DBGrid1: TDBGrid;
+    procedure btnFiltroClick(Sender: TObject);
+  private
+   procedure Filtrar;
+  public
+    { Public declarations }
+  end;
+
+var
+  FormFiltroVendas: TFormFiltroVendas;
+
+implementation
+
+{$R *.dfm}
+
+{ TFormFiltroVendas }
+
+procedure TFormFiltroVendas.btnFiltroClick(Sender: TObject);
+begin
+  inherited;
+  Filtrar;
+end;
+
+procedure TFormFiltroVendas.Filtrar;
+begin
+  fdQryFiltro.Close;
+  fdQryFiltro.SQL.Clear;
+  fdQryFiltro.SQL.Add('SELECT V.ID_VENDA_CAB,');
+  fdQryFiltro.SQL.Add('       V.ID_CLIENTE,');
+  fdQryFiltro.SQL.Add('       DECODE(C.TIPO_FJ, ''F'',C.NOME,C.RAZAO_SOCIAL),');
+  fdQryFiltro.SQL.Add('       V.DATA,');
+  fdQryFiltro.SQL.Add('       COALESCE(V.FATURADO,''N'') AS FATURADO');
+  fdQryFiltro.SQL.Add('FROM VENDA_CAB V INNER JOIN CLIENTE C ON C.ID_CLIENTE = V.ID_CLIENTE');
+  fdQryFiltro.SQL.Add('WHERE 1=1');
+
+   if Trim(edtFiltro.Text) <> '' then
+   fdQryFiltro.SQL.Add(' AND TRIM(UPPER(DECODE(C.TIPO_FJ, ''F'',C.NOME,C.RAZAO_SOCIAL))) LIKE ' + QuotedStr('%' + UpperCase(Trim(edtFiltro.Text)) + '%'));
+
+   if edtData1.Date > 0 then
+   fdQryFiltro.SQL.Add('AND V.DATA >= ' + QuotedStr(FormatDateTime('dd.mm.yyy', edtData1.Date)));
+
+   if edtData2.Date > 0 then
+   fdQryFiltro.SQL.Add('AND V.DATA <= ' + QuotedStr(FormatDateTime('dd.mm.yyy', edtData2.Date)));
+
+   if Trim(edtCodVenda.Text) <> '' then
+   begin
+     fdQryFiltro.SQL.Add('AND V.ID_VENDA_CAB = ' + edtCodVenda.Text);
+   end;
+
+   if cbFaturado.Checked then
+   begin
+     fdQryFiltro.SQL.Add('AND v.FATURADO = ''S''');
+   end;
+
+
+   fdQryFiltro.Open;
+   fdQryFiltro.FetchAll;
+
+end;
+
+end.

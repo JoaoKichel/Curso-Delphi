@@ -1,0 +1,120 @@
+inherited FormFiltroFornecedores: TFormFiltroFornecedores
+  Caption = 'Filtro de Fornecedores'
+  ClientHeight = 530
+  ClientWidth = 815
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsMaximized
+  ExplicitLeft = -346
+  ExplicitWidth = 831
+  ExplicitHeight = 569
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    Width = 815
+    ExplicitTop = -6
+    ExplicitWidth = 815
+    inherited Label1: TLabel
+      Width = 60
+      Caption = 'Raz'#227'o Social'
+      ExplicitWidth = 60
+    end
+    object Label2: TLabel [1]
+      Left = 320
+      Top = 16
+      Width = 25
+      Height = 13
+      Caption = 'CNPJ'
+    end
+    inherited edtFiltro: TEdit
+      Width = 273
+      ExplicitWidth = 273
+    end
+    inherited btnFiltro: TButton
+      Left = 548
+      Caption = 'Filtro'
+      OnClick = btnFiltroClick
+      ExplicitLeft = 548
+    end
+    inherited Panel2: TPanel
+      Left = 629
+    end
+    object edtCnpj: TEdit
+      Left = 320
+      Top = 35
+      Width = 137
+      Height = 21
+      TabOrder = 3
+    end
+  end
+  object DBGrid1: TDBGrid [1]
+    Left = 0
+    Top = 89
+    Width = 815
+    Height = 441
+    Align = alClient
+    DataSource = dsFiltro
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  inherited fdQryFiltro: TFDQuery
+    SQL.Strings = (
+      'SELECT * FROM FORNECEDOR;')
+    Left = 736
+    Top = 112
+    object fdQryFiltroID_FORNECEDOR: TIntegerField
+      FieldName = 'ID_FORNECEDOR'
+      Origin = 'ID_FORNECEDOR'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object fdQryFiltroRAZAO_SOCIAL: TStringField
+      FieldName = 'RAZAO_SOCIAL'
+      Origin = 'RAZAO_SOCIAL'
+      Size = 80
+    end
+    object fdQryFiltroFANTASIA: TStringField
+      FieldName = 'FANTASIA'
+      Origin = 'FANTASIA'
+      Size = 80
+    end
+    object fdQryFiltroCNPJ: TStringField
+      FieldName = 'CNPJ'
+      Origin = 'CNPJ'
+    end
+    object fdQryFiltroENDERECO: TStringField
+      FieldName = 'ENDERECO'
+      Origin = 'ENDERECO'
+      Size = 255
+    end
+    object fdQryFiltroBAIRRO: TStringField
+      FieldName = 'BAIRRO'
+      Origin = 'BAIRRO'
+    end
+    object fdQryFiltroID_CIDADE: TIntegerField
+      FieldName = 'ID_CIDADE'
+      Origin = 'ID_CIDADE'
+    end
+    object fdQryFiltroID_ESTADO: TIntegerField
+      FieldName = 'ID_ESTADO'
+      Origin = 'ID_ESTADO'
+    end
+    object fdQryFiltroEMAIL: TStringField
+      FieldName = 'EMAIL'
+      Origin = 'EMAIL'
+      Size = 255
+    end
+  end
+  inherited dsFiltro: TDataSource
+    Left = 736
+    Top = 184
+  end
+  inherited fdTransaction: TFDTransaction
+    Left = 736
+    Top = 256
+  end
+end

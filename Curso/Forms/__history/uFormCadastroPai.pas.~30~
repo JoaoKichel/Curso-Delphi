@@ -1,0 +1,108 @@
+unit uFormCadastroPai;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client, Data.DB,
+  FireDAC.Comp.DataSet, uDmDados;
+
+type
+  TFormCadastroPai = class(TForm)
+    pnCabecalho: TPanel;
+    btnNovo: TBitBtn;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    btnExcluir: TBitBtn;
+    btnSair: TBitBtn;
+    fdQryCadastro: TFDQuery;
+    fdUpdCadastro: TFDUpdateSQL;
+    fdTransaction: TFDTransaction;
+    dsCadastro: TDataSource;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    SpeedButton4: TSpeedButton;
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    {procedure f(Sender: TObject);}
+  private
+    function GetNameTable(pSql :string): string;
+  public
+    { Public declarations }
+  end;
+
+var
+  FormCadastroPai: TFormCadastroPai;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormCadastroPai.btnNovoClick(Sender: TObject);
+begin
+  if not (fdQryCadastro.State in [dsEdit,dsInsert]) then
+    fdQryCadastro.Insert;
+end;
+
+procedure TFormCadastroPai.btnGravarClick(Sender: TObject);
+begin
+  if fdQryCadastro.State in [dsEdit, dsInsert] then
+  begin
+    fdTransaction.StartTransaction;
+    fdQryCadastro.Post;
+    fdTransaction.CommitRetaining;
+    ShowMessage('Gravado com Sucesso!');
+  end;
+end;
+
+procedure TFormCadastroPai.btnCancelarClick(Sender: TObject);
+begin
+  if fdQryCadastro.State in [dsEdit, dsInsert] then
+  begin
+    fdQryCadastro.Cancel;
+    fdTransaction.RollbackRetaining;
+  end;
+end;
+
+procedure TFormCadastroPai.btnExcluirClick(Sender: TObject);
+begin
+  fdQryCadastro.Edit;
+  fdQryCadastro.FieldByName('DT_EXCLUIDO').AsDateTime := Date;
+  fdTransaction.StartTransaction;
+  fdQryCadastro.Post;
+  fdTransaction.CommitRetaining;
+  ShowMessage('Excluido com sucesso!');
+end;
+
+procedure TFormCadastroPai.btnSairClick(Sender: TObject);
+begin
+  Self.Close;
+end;
+
+procedure TFormCadastroPai.FormCreate(Sender: TObject);
+begin
+  fdQryCadastro.Open();
+end;
+
+function TFormCadastroPai.GetNameTable(pSql: string): string;
+var
+  vSql: TStringList;
+begin
+  vSql := TStringList.Create;
+  vSql.Delimiter := ' ';
+  vSql.StrictDelimiter := True;
+
+  vSql.DelimitedText := Copy(pSql, Pos('FROM', UpperCase(pSql), Length(pSql)));
+
+  Result := Trim(vSql.Strings[1]);
+end;
+
+end.

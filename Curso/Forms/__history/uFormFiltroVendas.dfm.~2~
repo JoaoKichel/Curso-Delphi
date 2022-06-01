@@ -1,0 +1,10 @@
+inherited FormFiltroVendas: TFormFiltroVendas
+  Caption = 'Filtro de Vendas'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    inherited btnFiltro: TButton
+      Caption = 'Filtrar'
+    end
+  end
+end

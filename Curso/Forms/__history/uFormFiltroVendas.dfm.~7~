@@ -1,0 +1,294 @@
+inherited FormFiltroVendas: TFormFiltroVendas
+  Caption = 'Filtro de Vendas'
+  ClientWidth = 1184
+  FormStyle = fsMDIChild
+  Visible = True
+  WindowState = wsMaximized
+  OnShow = FormShow
+  ExplicitLeft = -104
+  ExplicitWidth = 1200
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Panel1: TPanel
+    Width = 1184
+    inherited Label1: TLabel
+      Width = 33
+      Caption = 'Cliente'
+      ExplicitWidth = 33
+    end
+    object Label2: TLabel [1]
+      Left = 471
+      Top = 16
+      Width = 66
+      Height = 13
+      Caption = 'C'#243'digo Venda'
+    end
+    object Label3: TLabel [2]
+      Left = 271
+      Top = 24
+      Width = 84
+      Height = 13
+      Caption = 'Per'#237'odo de Venda'
+    end
+    inherited edtFiltro: TEdit
+      Width = 233
+      ExplicitWidth = 233
+    end
+    inherited btnFiltro: TButton
+      Left = 864
+      Caption = 'Filtrar'
+      OnClick = btnFiltroClick
+      ExplicitLeft = 864
+    end
+    inherited Panel2: TPanel
+      Left = 998
+      ExplicitLeft = 145
+    end
+    object edtData1: TDateTimePicker
+      Left = 263
+      Top = 35
+      Width = 98
+      Height = 21
+      Date = 44708.000000000000000000
+      Time = 0.704293391201645100
+      TabOrder = 3
+    end
+    object edtData2: TDateTimePicker
+      Left = 367
+      Top = 35
+      Width = 98
+      Height = 21
+      Date = 44708.000000000000000000
+      Time = 0.704293391201645100
+      TabOrder = 4
+    end
+    object edtCodVenda: TEdit
+      Left = 471
+      Top = 35
+      Width = 106
+      Height = 21
+      TabOrder = 5
+    end
+    object cbFaturado: TCheckBox
+      Left = 592
+      Top = 37
+      Width = 97
+      Height = 17
+      Caption = 'Faturado'
+      TabOrder = 6
+    end
+    object btnImprimir: TButton
+      Left = 945
+      Top = 33
+      Width = 75
+      Height = 25
+      Caption = 'Imprimir'
+      TabOrder = 7
+    end
+  end
+  object DBGrid1: TDBGrid [1]
+    Left = 0
+    Top = 89
+    Width = 1184
+    Height = 210
+    Align = alClient
+    DataSource = dsFiltro
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  inherited fdQryFiltro: TFDQuery
+    SQL.Strings = (
+      'SELECT V.ID_VENDA_CAB,'
+      '       V.ID_CLIENTE,'
+      '       DECODE(C.TIPO_FJ, '#39'F'#39',C.NOME,C.RAZAO_SOCIAL),'
+      '       V.DATA,'
+      '       COALESCE(V.FATURADO,'#39'N'#39') '
+      
+        'FROM VENDA_CAB V INNER JOIN CLIENTE C ON C.ID_CLIENTE = V.ID_CLI' +
+        'ENTE')
+    Left = 1104
+    Top = 96
+  end
+  inherited dsFiltro: TDataSource
+    Left = 1104
+    Top = 160
+  end
+  inherited fdTransaction: TFDTransaction
+    Left = 1104
+    Top = 232
+  end
+  object frVendas: TfrxReport
+    Version = '6.5.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Padr'#227'o'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 44709.343251168980000000
+    ReportOptions.LastChange = 44709.343251168980000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 568
+    Top = 144
+    Datasets = <
+      item
+        DataSet = frDbVendas
+        DataSetName = 'frDbVendas'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      Frame.Typ = []
+      MirrorMode = []
+      object Header1: TfrxHeader
+        FillType = ftBrush
+        Frame.Typ = []
+        Height = 60.472480000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          AllowVectorExport = True
+          Left = 3.779530000000000000
+          Width = 729.449290000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          Frame.Typ = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'RELATORIO DE VENDAS')
+          ParentFont = False
+        end
+      end
+      object GroupHeader1: TfrxGroupHeader
+        FillType = ftBrush
+        Frame.Typ = []
+        Height = 113.385900000000000000
+        Top = 102.047310000000000000
+        Width = 718.110700000000000000
+        Condition = 'frDbVendas."CLIENTE"'
+      end
+    end
+  end
+  object frDbVendas: TfrxDBDataset
+    UserName = 'frDbVendas'
+    CloseDataSource = False
+    DataSet = fdQryRelatorio
+    BCDToCurrency = False
+    Left = 632
+    Top = 144
+  end
+  object fdQryRelatorio: TFDQuery
+    Connection = DmDados.fdConexao
+    SQL.Strings = (
+      'SELECT V.ID_VENDA_CAB,'
+      '       V.ID_CLIENTE,'
+      '       DECODE(C.TIPO_FJ, '#39'F'#39',C.NOME,C.RAZAO_SOCIAL) AS CLIENTE,'
+      '       V.DATA,'
+      '       COALESCE(V.FATURADO,'#39'N'#39'),'
+      '       P.DESCRICAO,'
+      '       VI.QTD,'
+      '       (VI.VALOR_UNITARIO * VI.QTD) AS SUBTOTAL,'
+      '       COALESCE(VI.DESCONTO,0) DESCONTO,'
+      
+        '       (VI.VALOR_UNITARIO * VI.QTD) - COALESCE(VI.DESCONTO,0) AS' +
+        ' TOTAL'
+      'FROM VENDA_CAB V '
+      'INNER JOIN CLIENTE C ON C.ID_CLIENTE = V.ID_CLIENTE'
+      'INNER JOIN VENDA_ITEM VI ON VI.ID_VENDA_CAB = V.ID_VENDA_CAB'
+      'INNER JOIN PRODUTO P ON P.ID_PRODUTO = VI.ID_PRODUTO '
+      
+        'ORDER BY DECODE(C.TIPO_FJ, '#39'F'#39',C.NOME,C.RAZAO_SOCIAL), P.DESCRIC' +
+        'AO ')
+    Left = 492
+    Top = 143
+    object fdQryRelatorioID_VENDA_CAB: TIntegerField
+      FieldName = 'ID_VENDA_CAB'
+      Origin = 'ID_VENDA_CAB'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object fdQryRelatorioID_CLIENTE: TIntegerField
+      FieldName = 'ID_CLIENTE'
+      Origin = 'ID_CLIENTE'
+    end
+    object fdQryRelatorioDATA: TDateField
+      FieldName = 'DATA'
+      Origin = '"DATA"'
+    end
+    object fdQryRelatorioCOALESCE: TWideStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'COALESCE'
+      Origin = '"COALESCE"'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 1
+    end
+    object fdQryRelatorioDESCRICAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'DESCRICAO'
+      Origin = 'DESCRICAO'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 80
+    end
+    object fdQryRelatorioQTD: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'QTD'
+      Origin = 'QTD'
+      ProviderFlags = []
+      ReadOnly = True
+    end
+    object fdQryRelatorioSUBTOTAL: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'SUBTOTAL'
+      Origin = 'SUBTOTAL'
+      ProviderFlags = []
+      ReadOnly = True
+    end
+    object fdQryRelatorioDESCONTO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'DESCONTO'
+      Origin = 'DESCONTO'
+      ProviderFlags = []
+      ReadOnly = True
+    end
+    object fdQryRelatorioTOTAL: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'TOTAL'
+      Origin = 'TOTAL'
+      ProviderFlags = []
+      ReadOnly = True
+    end
+    object fdQryRelatorioCLIENTE: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CLIENTE'
+      Origin = 'CLIENTE'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 80
+    end
+  end
+end

@@ -1,0 +1,37 @@
+inherited FormCadastroUsuario: TFormCadastroUsuario
+  Caption = 'Cadastro de Usu'#225'rios'
+  WindowState = wsNormal
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited fdQryCadastro: TFDQuery
+    UpdateOptions.AssignedValues = [uvGeneratorName]
+    UpdateOptions.GeneratorName = 'GEN_USUARIO_ID'
+    UpdateOptions.AutoIncFields = 'ID_USUARIO'
+    SQL.Strings = (
+      'SELECT * FROM USUARIO')
+    object fdQryCadastroID_USUARIO: TIntegerField
+      FieldName = 'ID_USUARIO'
+      Origin = 'ID_USUARIO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object fdQryCadastroNOME: TStringField
+      FieldName = 'NOME'
+      Origin = 'NOME'
+      Size = 40
+    end
+    object fdQryCadastroLOGIN: TStringField
+      FieldName = 'LOGIN'
+      Origin = 'LOGIN'
+    end
+    object fdQryCadastroSENHA: TStringField
+      FieldName = 'SENHA'
+      Origin = 'SENHA'
+      Size = 255
+    end
+  end
+  inherited fdQryCodigo: TFDQuery
+    Left = 504
+    Top = 232
+  end
+end
